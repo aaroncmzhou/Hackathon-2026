@@ -1,2 +1,2 @@
-Pecan Park
-Aaron Zhou, 
+# Pecan Park
+Aaron Zhou, Angela Zhou, Lexi Sun
