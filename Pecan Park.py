@@ -89,11 +89,11 @@ def load_next_level():
     player2.max_charge = level_max_charges[level]
 
         
-    player1.pos = py.math.Vector2(250, 905)
+    player1.pos = py.math.Vector2(250, 901)
     player1.rect.topleft = (player1.pos.x, player1.pos.y)
     player1.vel = py.math.Vector2(0, 0)
     
-    player2.pos = py.math.Vector2(200, 905)
+    player2.pos = py.math.Vector2(200, 901)
     player2.rect.topleft = (player2.pos.x, player2.pos.y)
     player2.vel = py.math.Vector2(0, 0)
 
@@ -115,7 +115,7 @@ def load_next_level():
         screen.blit(transition, (0, 0))
         py.display.flip()
         clock.tick(60)
-    py.event.clear()
+    #py.event.clear()
     confetti_end_time = 0
 
 def draw_text():
