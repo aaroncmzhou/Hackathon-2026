@@ -195,7 +195,7 @@ class Player(py.sprite.Sprite):
             self.collide_with_rect(tile_rect, axis)
 
         boundaries = [
-            py.Rect(0, 930, 1500, 50),   #floor
+            py.Rect(0, 927, 1500, 50),   #floor
             py.Rect(-5, 0, 5, 950),      #left
             py.Rect(1500, 0, 5, 950)     #right
         ]
