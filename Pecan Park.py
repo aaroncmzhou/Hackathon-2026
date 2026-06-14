@@ -189,11 +189,12 @@ class Player(py.sprite.Sprite):
         self.on_ground = False
         self.was_on_ground = False
 
-    def handle_collisions(self, axis, other_player=None):
-        current_platforms = platforms[level]
-        for plat in current_platforms:
-            tile_rect = py.Rect(plat[0], plat[1], plat[2], plat[3])
-            self.collide_with_rect(tile_rect, axis)
+    def handle_collisions(self, axis, object, other_player=None):
+        if object == platforms:
+            current_platforms = platforms[level]
+            for plat in current_platforms:
+                tile_rect = py.Rect(plat[0], plat[1], plat[2], plat[3])
+                self.collide_with_rect(tile_rect, axis)
 
         boundaries = [
             py.Rect(0, 927, 1500, 50),   #floor
@@ -207,22 +208,28 @@ class Player(py.sprite.Sprite):
             self.collide_with_rect(other_player.rect, axis)
 
     def collide_with_rect(self, tile_rect, axis):
+        touching = 0
         if self.rect.colliderect(tile_rect):
             if axis == 'x':
                 if self.vel.x > 0:
                     self.rect.right = tile_rect.left
+                    touching = 1
                 elif self.vel.x < 0:
                     self.rect.left = tile_rect.right
+                    touching = 1
                 self.pos.x = self.rect.x
             if axis == 'y':
                 if self.vel.y > 0:
                     self.rect.bottom = tile_rect.top
                     self.vel.y = 0
                     self.on_ground = True
+                    touching = 1
                 elif self.vel.y < 0:
                     self.rect.top = tile_rect.bottom
                     self.vel.y = 0
+                    touching = 1
                 self.pos.y = self.rect.y
+        return touching
 
     def update(self, arrows, other_player=None):
         keys = py.key.get_pressed()
@@ -239,7 +246,7 @@ class Player(py.sprite.Sprite):
 
         self.pos.x += self.vel.x
         self.rect.x = round(self.pos.x)
-        self.handle_collisions("x", other_player)
+        self.handle_collisions("x", platforms, other_player)
 
         if jump_pressed and self.on_ground:
             self.vel.y = self.jump_power
@@ -261,7 +268,7 @@ class Player(py.sprite.Sprite):
         self.was_on_ground = self.on_ground
         self.was_velocity = self.vel.y
         self.on_ground = False
-        self.handle_collisions("y", other_player)
+        self.handle_collisions("y", platforms, other_player)
 
         if self.on_ground and not self.was_on_ground and self.was_velocity > 1.0:
             land.play()
