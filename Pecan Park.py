@@ -4,6 +4,7 @@ from random import randint, uniform
 WIDTH, HEIGHT = 1500, 950
 WALKSPEED = 5
 JUMPPOWER = -15
+GRAVITY = 0.8
 screen = py.display.set_mode((WIDTH, HEIGHT))
 confetti = []
 confetti_end_time = 0
@@ -177,7 +178,7 @@ class Player(py.sprite.Sprite):
         self.image = py.Surface((25, 25))
         self.rect = self.image.get_rect()
         self.speed = WALKSPEED
-        self.gravity = 0.8
+        self.gravity = GRAVITY
         self.jump_power = JUMPPOWER
 
         self.pos = py.math.Vector2(start_x, start_y)
@@ -197,7 +198,8 @@ class Player(py.sprite.Sprite):
         boundaries = [
             py.Rect(0, 927, 1500, 50),   #floor
             py.Rect(-5, 0, 5, 950),      #left
-            py.Rect(1500, 0, 5, 950)     #right
+            py.Rect(1500, 0, 5, 950),     #right
+            py.Rect(0, -5, 1500, 5)
         ]
         for boundary in boundaries:
             self.collide_with_rect(boundary, axis)
